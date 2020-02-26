@@ -81,6 +81,25 @@ public class DAO {
 		}
 		return result;
 	}
+        
+        /**
+	 * Met à jour un enregistrement dans la table DISCOUNT_CODE
+         * @param rate le taux à mettre à jour (positive or 0)
+	 * @param code la clé de l'enregistrement à mettre à jour
+	 * @return le nombre d'enregistrements mis à jour (1 ou 0)
+	 * @throws java.sql.SQLException renvoyées par JDBC
+	 **/
+	public int updateDiscountCode(float rate, String code) throws SQLException {
+		int result = 0;
+		String sql = "UPDATE DISCOUNT_CODE SET RATE = ? WHERE DISCOUNT_CODE = ?";
+		try (Connection connection = myDataSource.getConnection(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                        stmt.setFloat(1, rate);
+			stmt.setString(2, code);
+			result = stmt.executeUpdate();
+		}
+		return result;
+	}
 
 
 }

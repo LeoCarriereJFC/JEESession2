@@ -52,6 +52,15 @@ public class DiscountEditorController extends HttpServlet {
 						request.setAttribute("message", "Impossible de supprimer " + code + ", ce code est utilisé.");
 					}
 					break;
+                                case "UPDATE":
+                                        try {
+						dao.updateDiscountCode( Float.valueOf(taux) , code );
+						request.setAttribute("message", "Code " + code + " a bien été mis à jour avec le taux " + Float.valueOf(taux) + ".");
+						request.setAttribute("codes", dao.allCodes());								
+					} catch (SQLIntegrityConstraintViolationException e) {
+						request.setAttribute("message", "Impossible de mettre à jour " + code + ", ce code est utilisé.");
+					}
+                                        break;
 			}
 		} catch (Exception ex) {
 			Logger.getLogger("discountEditor").log(Level.SEVERE, "Action en erreur", ex);
